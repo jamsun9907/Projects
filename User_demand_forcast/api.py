@@ -1,20 +1,7 @@
-# import time
-# from selenium import webdriver
-
-# gameid = '1599340'
-# url = f'https://www.10000recipe.com/recipe/6926477'
-
-# driver = webdriver.Chrome(executable_path = 'C:/Users/Sunyoung_Jang/chromedriver/chromedriver') 
-# driver.implicitly_wait(time_to_wait=5)
-
-# driver.get(url)
-
-# try:
-#     meterial = driver.find_elements(by=id ,value='divConfirmedMaterialArea')
-#     print(meterial)
-# except: 
-#     print('\n-----------------------\nError! Sth is wrong')
-#     # driver.quit()
+from bs4 import BeautifulSoup
+from requests import get
+import time
+from pymongo import MongoClient
 
 def get_recipe_list(keyword='자취요리', page_num = 1):
     """
@@ -52,6 +39,8 @@ def recipe_finder(recipe_code):
     """
     레시피 코드를 입력하면 레시피명, 재료, 링크를 반환한다.
     """
+    time.sleep(5) # 트래픽 부하를 막기 위해..
+
     # 기본 설정
     url = f'https://www.10000recipe.com/recipe/{recipe_code}'
     html = get(url).content
@@ -69,18 +58,38 @@ def recipe_finder(recipe_code):
 
     for tb_num in range(len(ingredients)):
         # 테이블 마다 이름, 재료 가져옴
-        tb_name = ingredients[tb_num].b.contents[0]
+        tb_name = ingredients[tb_num].b.contents[0].replace('[','').replace(']','')
         ingre_list = [ingregient.contents[0].strip() for ingregient in ingredients[tb_num].find_all('li')] 
 
         ingre_dict[tb_name] = ingre_list # 딕셔너리 형태로 저장
     
     # 가져온 데이터를 dict 형태로 concatenate
     # 저장할 형태 지정 -> nosql로 저장할 예정
-    reciep_info = {}
+    recipe_info = {}
 
     # 저장
-    reciep_info['recipe_name'] = recipe_name[0]
-    reciep_info['url'] = url
-    reciep_info['ingredients'] = ingre_dict
+    recipe_info['recipe_name'] = recipe_name[0]
+    recipe_info['url'] = url
+    recipe_info['ingredients'] = ingre_dict
 
-    return reciep_info
+    return recipe_info
+
+def save_to_mongoDB(recipe):
+    """
+    힘들게 구한 레시피 info를 mongoDB에 저장한다. reco
+    """
+    HOST = 'cluster0.1lslter.mongodb.net'
+    USER = 'Sunyoung'
+    PASSWORD = 'sun123'
+    DATABASE_NAME = 'recipe_DB'
+    COLLECTION_NAME = 'recipe_info'
+    MONGO_URI = f"mongodb+srv://{USER}:{PASSWORD}@{HOST}/{DATABASE_NAME}?retryWrites=true&w=majority"
+
+    # 커넥션 접속 작업
+    client = MongoClient(MONGO_URI) 
+    db = client[DATABASE_NAME] # Connection
+    collection = db[COLLECTION_NAME] # Creating table
+
+    collection.insert_one(document = recipe)
+
+    return None
