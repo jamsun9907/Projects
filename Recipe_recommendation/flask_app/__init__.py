@@ -55,8 +55,13 @@ def index():
 
 @app.route('/tmp', methods=['GET','POST'])
 def tmp():
+    return render_template('template_main.html')
 
-    return render_template('index_temp.html')
+
+@app.route('/dashboard', methods =['GET','POST'])
+def dashboard():
+    return render_template('dashboard.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

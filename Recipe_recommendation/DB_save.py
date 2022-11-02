@@ -85,8 +85,8 @@ def preprocessing(df):
 def get_connection():
 
     HOST = 'localhost'
-    USER = 'sunyoung'
-    PASSWORD = '0720'
+    USER = 'root'
+    PASSWORD = '0000'
     DB_name='recipe'
 
     conn = pymysql.connect(host = HOST, user = USER, password = PASSWORD, db = DB_name, charset='utf8') 
@@ -107,7 +107,7 @@ def init_table(conn):
         Cooking_time INTEGER,
         Level VARCHAR(200),
         Url VARCHAR(200),
-        Ingredients VARCHAR(200));""")
+        Ingredients VARCHAR(10000));""")
     
     conn.commit()
     pass
@@ -127,3 +127,10 @@ def df_to_sql(conn, df_clean):
     conn.commit()
     pass
 
+## 저장
+data_list = load_Mongo_recipe()
+df = list_to_dataframe(data_list)
+df_clean = preprocessing(df)
+conn = get_connection()
+init_table(conn)
+df_to_sql(conn, df_clean)
