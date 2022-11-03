@@ -25,18 +25,18 @@
 			</form>
 
 		<!-- Body -->
-			<p>레시피 목록 구성이 궁금해요! <a href="/dashboard" class="button-2">Dashboard 구경하기</a><p>
-
-			{% if recipes %}
-			<p class="print"><h3><b>추천 레시피</b></h3>
-			<ol class="a">
-			{% for row in recipes %}
-				<li>{{ row[0] }}<br><a href={{ row[1] }}>{{ row[1] }}</a></li></li>
-			{% endfor %}
-			</ol>
-			</p>
-			{% endif %}
-
+			<body>
+				<p>레시피 목록 구성이 궁금해요! <a href="/dashboard" class="button-2">Dashboard 구경하기</a><p>
+				{% if recipes %}
+				<p class="print"><h3><b>추천 레시피</b></h3>
+				<ol class="a">
+				{% for row in recipes %}
+					<li>{{ row[0] }}<br><a href={{ row[1] }}>{{ row[1] }}</a></li></li>
+				{% endfor %}
+				</ol>
+				</p>
+				{% endif %}
+			</body>
 
 		<!-- Footer -->
 			<footer id="footer">
