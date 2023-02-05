@@ -30,12 +30,6 @@
 ![image](https://user-images.githubusercontent.com/83063287/216811009-380bfecf-d8a0-4634-ab5b-9e579439899e.PNG)
 ![image](https://user-images.githubusercontent.com/83063287/216811010-e946aaa7-e018-4ac4-bdea-d64e43ef053c.PNG)
 
-### Data Preparation
-
-### EDA
-
-### Conclusion
-
 ## 3.1 개인적인 회고
 **보완이 필요한 점**    
 - 각 통계 검정법을 어떻게 쓰는지, 조건은 무엇이고 어떻게 쓰는지 더 공부가 필요하다. 머신러닝 기법도 마찬가지
