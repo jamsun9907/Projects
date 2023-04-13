@@ -61,7 +61,7 @@
 ### 3) EDA : Descriptive statistics
 1. 시장 규모
 - 미국 > 유럽 > 일본 > 기타 지역으로 나타남
-![image](https://user-images.githubusercontent.com/83063287/231672394-979b0647-4bae-4567-80bf-cc042a8b0227.png)
+![image](https://user-images.githubusercontent.com/83063287/231672394-979b0647-4bae-4567-80bf-cc042a8b0227.png){: width="10%" height="10%"}
 
 2. 연도별 트랜드 - 
    1) 장르
