@@ -3,32 +3,141 @@
 > 비디오 게임 순위 차트를 제공하는 [vgchart](https://www.vgchartz.com/) 사이트의 비디오 게임 판매량 데이터를 분석한 프로젝트입니다.
 
 ### 목차
-1. 분석과정(소스코드)
-2. [프로젝트 발표자료](https://github.com/jamsun9907/Projects/new/main/Video_game_data_analysis#1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%82%B4%EC%9A%A9)<br>
+1. 소스코드
+2. 주요 분석 내용
+   1) Introduction
+   2) 데이터 준비
+   3) EDA
+   4) 가설 수립 및 검증
+   5) 결론
 3. [개인적 회고 및 피드백](https://github.com/jamsun9907/Projects/new/main/Video_game_data_analysis#1-%EC%A3%BC%EC%9A%94-%EB%B6%84%EC%84%9D-%EA%B0%80%EC%A0%95)
-## 1. 분석과정(소스코드)
+## 1. 소스코드
 [Gamedata_analysis.ipynb](https://github.com/jamsun9907/Projects/blob/main/Video_game_data_analysis/Gamedata_analysis.ipynb) 파일을 참고해주세요 :)
 
-## 2. 프로젝트 발표자료
-![image](https://user-images.githubusercontent.com/83063287/216811011-bcde793c-da97-4f18-ad4c-484cab4c5163.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811014-72dda350-37a6-4e6a-8ff1-f4e945ad1e67.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811015-237c67ca-9767-4621-aa03-52b43a3f18fa.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811016-89638a05-b875-4796-b5c2-52d04db9e6ce.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811017-3deaeead-cc1b-4a70-abcd-f405e6edad94.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811019-5e08769b-3848-4bf2-8c97-3b2c62952036.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811021-788f35cb-73e2-4663-9cc2-f20a117f0fdb.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811022-c7ed8f6a-4123-4630-97db-556144b5e37f.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811023-9b2d298e-95d6-403e-af4e-edd7ea822864.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216810997-a7d38a54-18ca-4dca-907f-4f1c4def01c3.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216810999-680ef784-5564-4b39-a980-e20e7d57f9a8.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811000-8160dd57-e5e8-4183-ad4f-f05b64d60359.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811001-14d4aef2-67c0-45d0-ab61-857b710033eb.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811003-0696cd39-213f-43f5-afea-f8393e1c3009.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811006-a4d36922-d157-4f40-9963-322f8f6ca248.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811007-2d29bd77-ebfe-44a2-866e-47ab79a30714.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811008-5b84987a-f61c-4e0e-9cf0-976e64fa34ae.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811009-380bfecf-d8a0-4634-ab5b-9e579439899e.PNG)
-![image](https://user-images.githubusercontent.com/83063287/216811010-e946aaa7-e018-4ac4-bdea-d64e43ef053c.PNG)
+## 2. 주요 분석 내용
+### 1) Introduction
+1. 사전 가정
+* 데이터 분석 목표 : 다음분기(2017년도) 게임 기획을 위한 탐색
+* 기획 시점 : 2016년 12월 말
+* 회사 정보
+   * 콘솔게임 개발사
+   * 주요 매출은 RPG 게임 IP에서 창출
+   * 글로벌 시장에서도 어느정도 인지도 보유
+   * 새로운 장르의 게임 개발 역량 보유
+
+2. 문제정의
+
+   **Key ask** : 다음 분기에 어떤 장르의 게임을 설계해야 하는가?
+
+* 지역에 따른 장르 선호도는 다른가?
+* 연도별 (2014~2016) 게임 트랜드는 어떠한가?
+* 근 3년간 전 지역에서 Top sales를 보여준 상위 10개 게임은 무엇인가?
+
+### 2) 데이터 준비
+1. 분석 대상 데이터
+* 최근 추세 확인을 위하여 2014 ~ 2016 기간의 데이터로 한정
+* 총 867개의 개별 타이틀 분석 
+데이터 컬럼
+: 
+
+2. 데이터 전처리
+   1) 결측값 - 각 컬럼별 결측값 제거 및 대치
+   * `Year`: 271개 제거
+   * `Genre`: 50개 제거
+   * `Publisher` : 58개 “Unknown”으로 변환   
+
+   2) 중복값
+   * `Name`, `Platform` 값이 모두 동일한 3개 데이터 제거
+
+   3) 부정확한 데이터 & 구조
+   * 분석을 위하여 `Sales` 수치는 Million 단위로 통일
+   * 타이틀 당 지역별로 나뉘어진 타이틀은 플랫폼이 동일한 경우 통합
+
+3. Feature engineering - 기존 컬럼을 활용하여 새로운 컬럼 추가
+* `Total` : 전 지역의 판매량을 합한 값
+* `Type` : `Platform` 컬럼의 값을 콘솔게임, 휴대용 게임기, PC게임 세가지로 카테고리로 통합
+
+
+### 3) EDA : Descriptive statistics
+1. 시장 규모
+- 미국 > 유럽 > 일본 > 기타 지역으로 나타남
+![image](https://user-images.githubusercontent.com/83063287/231672394-979b0647-4bae-4567-80bf-cc042a8b0227.png)
+
+2. 연도별 트랜드 - 
+   1) 장르
+   - 2014~2016 3개년 간 액션, 슈팅게임, 스포츠 게임이 꾸준히 전체 판매량에서 상위를 차지
+   ![image](https://user-images.githubusercontent.com/83063287/231672607-9372d4bd-ef34-473c-828a-4db7439b2a19.png)
+
+   2) 플랫폼
+   * 연도 별로, 콘솔이 지속적으로 우위를 점하고 있음
+   * 다만 기종 상관 없이 판매량이 지속적으로 감소하고있음
+   * 스마트폰의 발달로 점유율이 모바일 게임으로 넘어가고 있지 않나 조심스럽게 추측되며, 추가적인 사후 분석이 필요할 것으로 보임
+   ![image](https://user-images.githubusercontent.com/83063287/231672870-df8e23d4-25e1-4224-b722-7320ea39e847.png)
+
+3. 지역별 장르 선호도 (북미 & 일본)
+* 유럽과 북미의 장르 선호도는 비슷하게 슈팅게임과 액션, 스포츠게임을 선호하는 것으로 나타났다. (다만 가설 검증 필요)
+* 일본에서는 명확히 롤플레잉 게임이 우위를 점하고 있음. 북미, 유럽에서 높은 점유율을 보이던 슈팅, 스포츠 게임은 매우 낮은 판매량을 보임.
+* 기타 지역은 일본을 제외한 나머지 지역과 비슷한 장르 분포를 보임.
+* Action게임의 경우 지역 상관없이 항상 상위 판매량을 보임. 4개 집단의 차이를 검정하기 위해 카이제곱 분석이 필요
+
+![image](https://user-images.githubusercontent.com/83063287/231673320-b2eb1925-6649-4ae6-bf64-ee79b54a0992.png)
+
+4. 지역별 플랫폼 선호도 (유럽 & 기타)
+* 일본을 제외하고 콘솔의 점유율이 압도적으로 우세
+* 이는 닌텐도 DS와 같은 휴대용 게임 기기가 일본에서 특히 발달했다는 것을 알 수 있음
+-> 지역 별 콘솔 기기의 선호도에 차이가 나는지 여부에 대한 가설 검증이 필요
+![image](https://user-images.githubusercontent.com/83063287/231673880-02a8a6f0-f389-410a-bf1b-55a016827f4c.png)
+
+
+### 4) 가설 수립 및 검증
+1. 가설 수립
+- 가설 1 : 지역에 따라 선호하는 게임장르는 다르다.
+- 가설 2 : 지역에 따라 선호하는 게임플랫폼은 다르다.<br>
+
+-> 두 가설을 검증하기 위하여 통계적 검정방법을 사용<br>
+- **검정 방법** | 카이제곱 검정(chi-squared test)
+
+2. 가설 검정 결과
+   1) 가설 1 : 지역에 따라 선호하는 게임장르는 다르다.
+   * 유의수준 0.05에서 지역 판매량과 장르 간에는 통계적으로 유의미한 관련성이 있는 것으로 나타남
+   * 통계량
+      * X^2 statistics : 63.52
+      * p-value : 0.0011
+   
+   1) 가설 2 : 지역에 따라 선호하는 게임플랫폼은 다르다.
+   * 유의확률이 0.0 이므로 유의수준 0.01에서 지역 판매량과 플랫폼 간에는 통계적으로 유의미한 관련성이 있는 것으로 나타남
+   * 통계량
+      * X^2 statistics : 185.39
+      * p-value : 0.0
+
+3. 근 3년간 전 지역(Total Sales)에서 최고 판매량을 보여준 상위 10개 게임
+* 2014년~2016년 사이 최고 판매량을 보여준 게임들은 주로 콘솔 게임이고, 
+* 그 중 PS4, 3DS 플랫폼
+* 슈팅, 엑션, 롤 플레잉 장르라는 공통점
+![image](https://user-images.githubusercontent.com/83063287/231675704-5988a811-e11e-4d8b-9353-7c1c2702ebf7.png)
+
+4. 2016년 전 지역에서 Top sales를 보여준 상위 10개 게임
+* 위의결과를 2016년으로 한정할 경우 휴대용 게임기의 시대는 가고 콘솔게임이 독점했음을 알 수 있음
+* 그 중 특히 PS4가 높은 판매량을 보여, 플랫폼 트랜드는 PS4임을 보여줌
+* 장르의 경우 Far cry, No man’s Sky는 사실상 슈팅게임의 성격을 보임을 감안한다면 이는 2016년도 장르 트랜드는 슈팅게임이 이끌었다는 것을 시사
+![image](https://user-images.githubusercontent.com/83063287/231676037-e17c97eb-aa6d-409e-b983-bfb41fa7caea.png)
+
+### 5) 결론
+1. Summary<br><br>
+   **지역에 따른 선호도**
+   * Genre : 일본은 RPG, 나머지 지역은 Action, Shooter 게임이 선호
+   * Platform : Console(Total) / Nintendo(JP) 
+
+   **연도별 (2014~2016) 게임 트랜드**
+   * Action > Shooter > Sports 순
+   * 순위 변동 없음
+   * 다만 2016년은 Shooter 장르가 Top sales에 주로 분포
+
+<br>
+
+2. Action Plan   
+이상의 결론을 종합하여, 다음 분기 게임 기획은 `Action`, `Shooter` 장르를 결합한 `PS4` 게임 개발을 제안한다. <br>
+또한 `일본 시장`을 공략한다면, 기존 `RPG 게임 IP를 활용`하여 `액션성을 가미`한 확장팩 시리즈 개발을 시도해 볼 수 있을 것이다.
 
 ## 3.1 개인적인 회고
 **보완이 필요한 점**    
